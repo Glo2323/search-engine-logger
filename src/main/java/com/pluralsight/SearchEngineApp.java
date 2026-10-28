@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class SearchEngineApp {
@@ -12,26 +13,48 @@ public class SearchEngineApp {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        LocalDateTime now = LocalDateTime.now();
+         DateTimeFormatter dateF = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
-        System.out.println("Enter a search term (X or x to exit):  ");
-        String search = input.nextLine();
+         LocalDateTime now = LocalDateTime.now();
 
-        try {
+         try {
+
+             BufferedWriter searchWriter = new BufferedWriter(new FileWriter("logs.txt", true));
+
+             String LaunchTerm = String.format(" %s Launch: ", now.format(dateF));
+
+             searchWriter.write(LaunchTerm);
+             searchWriter.newLine();
+             boolean appRunning = true;
+             while (appRunning) {
+
+                 System.out.println("Enter a search term (X or x to exit):  ");
+
+                 String search = input.nextLine();
 
 
-            BufferedWriter searchWriter = new BufferedWriter(new FileWriter("logs.txt", true));
+                 System.out.println();
 
-            String searchTerm = String.format(" %s search:  %s",now , search);
+//                BufferedWriter searchWriter = new BufferedWriter(new FileWriter("logs.txt", true));
 
-            searchWriter.write(searchTerm);
+                 String searchTerm = String.format(" %s search: %s", now.format(dateF), search);
 
-            searchWriter.close();
+                 searchWriter.write(searchTerm);
+                 searchWriter.newLine();
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
+                 if (search.equalsIgnoreCase("X")) {
+                     String searchExit = String.format(" %s exit :", now.format(dateF));
+                     searchWriter.write(searchExit);
+                     searchWriter.newLine();
+
+                     appRunning = false;
+                 }
+             }
+             searchWriter.close();
+         } catch (Exception e) {
+             throw new RuntimeException(e);
+         }
 
 
     }
