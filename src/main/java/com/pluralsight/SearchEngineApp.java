@@ -27,28 +27,25 @@ public class SearchEngineApp {
              searchWriter.newLine();
              boolean appRunning = true;
              while (appRunning) {
-
                  System.out.println("Enter a search term (X or x to exit):  ");
-
                  String search = input.nextLine();
-
-
-                 System.out.println();
-
-//                BufferedWriter searchWriter = new BufferedWriter(new FileWriter("logs.txt", true));
-
-                 String searchTerm = String.format(" %s search: %s", now.format(dateF), search);
-
-                 searchWriter.write(searchTerm);
-                 searchWriter.newLine();
-
-
                  if (search.equalsIgnoreCase("X")) {
                      String searchExit = String.format(" %s exit :", now.format(dateF));
                      searchWriter.write(searchExit);
                      searchWriter.newLine();
 
                      appRunning = false;
+                 }else {
+
+                     System.out.println();
+
+//                BufferedWriter searchWriter = new BufferedWriter(new FileWriter("logs.txt", true));
+
+                     String searchTerm = String.format(" %s search: %s", now.format(dateF), search);
+
+                     searchWriter.write(searchTerm);
+                     searchWriter.newLine();
+
                  }
              }
              searchWriter.close();
